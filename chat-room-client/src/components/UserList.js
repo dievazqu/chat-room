@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import socket from "./Socket";
+import COLORS from "../colors";
 
 const UserList = () => {
 
@@ -12,7 +13,7 @@ const UserList = () => {
 
     const [users, setUsers] = useState([]);
 
-    return (<div>
+    return (<div style={{backgroundColor: COLORS.chatBackground}}>
         <h4> Users </h4>
         {users.length === 0 ?
             "No connnected users" :

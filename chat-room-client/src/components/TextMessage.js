@@ -1,12 +1,9 @@
 import React from "react";
 
 const TextMessage = ({message}) => {
-    return (<div>
-        <div style={{fontWeight: 'bold'}}>
-            {message.user.name}:
-        </div>
-        <div>{message.message}</div>
-    </div>)
+    console.log("TextMessage", message);
+
+    return (<div style={{whiteSpace: "pre-wrap", width:"100%"}}>{message.message}</div>);
 }
 
 export default TextMessage;

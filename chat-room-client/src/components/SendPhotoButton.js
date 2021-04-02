@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Button, Modal } from '@material-ui/core';
 import ImageTagger from "./ImageTagger";
+import COLORS from "../colors";
 
 const SendPhotoButton = (token) => {
 
@@ -23,16 +24,15 @@ const SendPhotoButton = (token) => {
     }
 
     const closeModal = () => {
-        setShowModal(false)
+        setShowModal(false);
+
     }
 
     return (<div>
         <input type='file' id='file' ref={inputFile} onChange={handleFileSelected} style={{display: 'none'}}/>
-        <Button variant="contained" color="secondary" type="submit" onClick={onButtonClick}>Send Photo</Button>
+        <Button variant="contained" style={{backgroundColor: COLORS.buttons}} type="submit" onClick={onButtonClick}>Send Photo</Button>
         <Modal open={showModal} onClose={closeModal}>
-            <ImageTagger image={image} onSubmit={closeModal} token={token}>
-
-            </ImageTagger>
+            <ImageTagger image={image} onSubmit={closeModal} token={token}/>
         </Modal>
     </div>);
 }

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import socket from "./Socket";
 import { Grid } from '@material-ui/core';
 import Message from "./Message";
+import COLORS from "../colors"
 
 const ChatMessages = () => {
 
@@ -30,11 +31,11 @@ const ChatMessages = () => {
         scrollRef.current.scrollIntoView({ behavior: 'smooth'});
     });
 
-    return (<div>
-        <h4>Chat</h4>
-        <div style={{overflow: "scroll", minHeight: 400, maxHeight: 400, margin: 20}}>
+    return (<div style={{backgroundColor: COLORS.chatBackground}}>
+        <div style={{overflow: "scroll", minHeight: 460, maxHeight: 600, margin: 20}}>
             <Grid container direction={"column"} spacing={2}>
-                { messages.length === 0 ? (<Grid item> No messages </Grid>) : messages.map((msg, i) => {
+                <br/>
+                { messages.length === 0 ? "" : messages.map((msg, i) => {
                         return (<Grid item key={i}> <Message message={msg}/> </Grid>)
                 }) }
                 <div ref={scrollRef}/>

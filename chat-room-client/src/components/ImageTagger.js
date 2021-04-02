@@ -2,10 +2,11 @@ import React, { useRef, useEffect, useState } from "react";
 import { Button, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import socket from "./Socket";
+import COLORS from "../colors";
 
 const ImageTagger = ({token, image, onSubmit}) => {
 
-    const [urlImageData, setUrlImageData] = useState(null);
+    const [urlImageData, setUrlImageData] = useState([]);
     const [URLData, setURLData] = useState(null);
     const [load, setLoad] = useState(false);
 
@@ -20,9 +21,8 @@ const ImageTagger = ({token, image, onSubmit}) => {
 
     const handleMouseUp = (event) => {
         console.log("Mouse Up", event);
-        setTaggingRect({x0:event.clientX, y0:event.clientY, x1:event.clientX + 100, y1:event.clientY+100})
         setTaggingRect(null);
-        setUrlImageData(URLData);
+        setUrlImageData([...urlImageData, URLData]);
     }
 
     const handleMouseMove = (event) => {
@@ -37,13 +37,13 @@ const ImageTagger = ({token, image, onSubmit}) => {
     const modalStyle = makeStyles((theme) => ({
         paper: {
             position: "absolute",
-            backgroundColor: theme.palette.background.paper,
+            backgroundColor: COLORS.primaryBackground,
             border: '2px solid #000',
             boxShadow: theme.shadows[5],
             padding: theme.spacing(4, 4, 4),
             top: "4%",
-            left: "25%",
-            right: "25%"
+            left: "30%",
+            right: "30%"
         },
     }));
     const classes = modalStyle();
@@ -92,8 +92,8 @@ const ImageTagger = ({token, image, onSubmit}) => {
         }
 
         console.log(image)
-        if (urlImageData != null) {
-            img.src = urlImageData;
+        if (urlImageData.length > 0) {
+            img.src = urlImageData[urlImageData.length - 1];
         } else {
             img.src = URL.createObjectURL(image);
         }
@@ -107,6 +107,12 @@ const ImageTagger = ({token, image, onSubmit}) => {
         onSubmit();
     }
 
+    const handleUndo = () => {
+        if (urlImageData.length > 0) {
+            setUrlImageData(urlImageData.slice(0, -1));
+        }
+    }
+
     return (<div className={classes.paper}>
         <Grid container direction={"column"} spacing={2}>
             <Grid item>
@@ -116,8 +122,14 @@ const ImageTagger = ({token, image, onSubmit}) => {
                 <canvas ref={canvasRef} style={{"width": "100%", "height": "100%"}}
                         onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} onMouseMove={handleMouseMove}/>
             </Grid>
-            <Grid item>
-                <Button onClick={handleSend}>Send</Button>
+            <Grid item container alignItems={"center"} justify={"center"}>
+                <Grid item xs={2}>
+                    <Button variant="contained" style={{backgroundColor: COLORS.buttons}} onClick={handleUndo}>Undo</Button>
+                </Grid>
+                <Grid item xs={2}/>
+                <Grid item xs={2}>
+                    <Button variant="contained" style={{backgroundColor: COLORS.buttons}} onClick={handleSend}>Send</Button>
+                </Grid>
             </Grid>
 
         </Grid>

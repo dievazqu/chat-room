@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { Button, Grid, Paper, TextField } from '@material-ui/core';
+import { Button, Grid, Paper, TextField, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios'
+import COLORS from "../colors";
 
 const LoginBox = ({onLogin}) => {
 
     const useStyles = makeStyles((theme) => ({
         root: {
             flexGrow: 1,
+            top: "15%"
         },
         paper: {
             padding: theme.spacing(2),
@@ -45,13 +47,11 @@ const LoginBox = ({onLogin}) => {
         login(inputValue);
     }
 
-    const classes = useStyles();
-
-    return (
-        <Grid container className={classes.root}>
+    return (<Box pt={10}>
+        <Grid container>
             <Grid item xs={4}></Grid>
             <Grid item xs={4}>
-                <Paper elevation={4}>
+                <Paper elevation={5} style={{backgroundColor: COLORS.primaryBackground}}>
                     <form onSubmit={handleSubmit}>
                         <Grid item container spacing={2} alignItems="center" direction="column" >
                             <Grid item>
@@ -71,13 +71,14 @@ const LoginBox = ({onLogin}) => {
                             </Grid>
 
                             <Grid item>
-                                <Button variant="contained" color="secondary" type="submit">Enter Chat</Button>
+                                <Button variant="contained" style={{backgroundColor: COLORS.buttons}} type="submit">Enter Chat</Button>
                             </Grid>
                         </Grid>
                     </form>
                 </Paper>
             </Grid>
-        </Grid>);
+        </Grid>
+    </Box>);
 }
 
 export default LoginBox;
