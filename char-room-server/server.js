@@ -23,7 +23,18 @@ io.on("connection", socket => {
         const user = loggedUsers[token];
         if (user) {
             console.log(`User: ${user.name} sent message: ${message}`)
-            io.emit("new_message", {user: user, message: message});
+            io.emit("new_message", {type:"text", user: user, message: message});
+        } else {
+            console.warn("Invalid user ", user);
+        }
+    });
+
+    socket.on('send_image', ({token, image}) => {
+        console.log(`Receiving ${token} with image length ${image.length}`)
+        const user = loggedUsers[token];
+        if (user) {
+            console.log(`User: ${user.name} sent image`);
+            io.emit("new_image", {type:"image", user: user, message: image});
         } else {
             console.warn("Invalid user ", user);
         }

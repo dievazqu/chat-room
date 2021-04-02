@@ -23,7 +23,7 @@ const ChatRoom = ({token}) => {
                                 </Paper>
                             </Grid>
                             <Grid item>
-                                <SendPhotoButton/>
+                                <SendPhotoButton token={token}/>
                             </Grid>
                             <Grid item>
                                 <ChatInput token={token}/>
